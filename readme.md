@@ -94,7 +94,7 @@ should write plot for first 10 sensors to data/series_\<sensor_id\>.png if param
 
 ### 4) Install crontab
 
-#### Data preparation jobs (user <your datascientist>)
+#### Sensor data preparation jobs (user <your datascientist>)
 
 luftApiDaemon every 5 minutes
 
@@ -103,6 +103,14 @@ luftApiDaemon every 5 minutes
 luftsequence like every 32 minutes instead of every 5
 
 > */32 * * * * cd /home/okl/luftdaten/ && /usr/bin/python3.12 /home/okl/luftdaten/luftSequence.py >> /dev/null 2>&1
+
+#### Wind
+Retrieve data 
+5 */2 * * * cd /home/okl/luftdaten/ && /usr/bin/python3.12 /home/okl/luftdaten/getWind100.py >> /dev/null 2>&1
+
+Clean old files (> 40 days, check with settings in luftApiDaemon)
+0 3 * * * /home/okl/luftdaten/cleanWind.sh
+
 
 
 replace directories with your user directory and log with /dev/null if desired 
